@@ -2,6 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import { useChat } from 'ai/react';
 import Image from 'next/image';
+import ReactDOM from "react-dom/client";
+import { AudioRecorder } from 'react-audio-voice-recorder';
 
 const Chat = () => {
   const [submitType, setSubmitType] = useState<'text'|'image'>("text");
@@ -50,6 +52,28 @@ const Chat = () => {
     system: '#fff',
   }
 
+  const addAudioElement = (blob: Blob) => {
+    const url = URL.createObjectURL(blob);
+    const audio = document.createElement("audio");
+    audio.src = url;
+    audio.controls = true;
+    document.body.appendChild(audio);
+  };
+
+  // ReactDOM.createRoot(document.getElementById("root")).render(
+  //   <React.StrictMode>
+  //     <AudioRecorder 
+  //       onRecordingComplete={addAudioElement}
+  //       audioTrackConstraints={{
+  //         noiseSuppression: true,
+  //         echoCancellation: true,
+  //       }} 
+  //       downloadOnSavePress={true}
+  //       downloadFileExtension="webm"
+  //     />
+  //   </React.StrictMode>
+  // );
+
   const renderResponse = () => {
     if (submitType === 'text') {
       return (
@@ -81,11 +105,11 @@ const Chat = () => {
       <form onSubmit={onSubmit} className="mainForm">
         <input name="input-field" placeholder="Say anything" onChange={handleInputChange} value={input} />
         <button type="submit" className="mainButton" disabled={loading} onClick={() => setSubmitType('text')}>
-          TEXT
+          SUBMIT
         </button>
-        <button type="submit" className="secondaryButton" disabled={loading} onClick={() => setSubmitType('image')}>
-          IMAGE
-        </button>
+        {/* <button type="submit" className="secondaryButton" disabled={loading} onClick={() => setSubmitType('image')}> */}
+          {/* IMAGE */}
+        {/* </button> */}
       </form>
     </>
   );
