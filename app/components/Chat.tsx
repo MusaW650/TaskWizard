@@ -1,73 +1,61 @@
-import React from 'react';
-import { useState } from 'react';
-import { useChat } from 'ai/react';
-import Image from 'next/image';
+import React, { useEffect } from "react";
+import { useState } from "react";
+import { useChat } from "ai/react";
+import { useRef } from "react";
+import Image from "next/image";
 import ReactDOM from "react-dom/client";
-import { AudioRecorder } from 'react-audio-voice-recorder';
+import { AudioRecorder } from "react-audio-voice-recorder";
+import { render } from "react-dom";
+
+type ChatMessage = {
+  id: string;
+  role: string;
+  content: string;
+};
+
+type Task = {
+  text: string;
+  completed: boolean;
+};
 
 const Chat = () => {
-  const [submitType, setSubmitType] = useState<'text'|'image'>("text");
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const [tasks, setTasks] = useState<Task[]>([]); // Initialize tasks as an empty array
   const { messages, input, handleInputChange, handleSubmit } = useChat({
-    api: '/api/openai',
+    api: "/api/openai",
   });
-
-  const getImageData = async () => {
-    try {
-      const response = await fetch('/api/dall-e', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ prompt: input })
-      });
-      const { imageUrl } = await response.json();
-      setImageUrl(imageUrl);
-      setError("");
-    } catch (e) {
-      setError(`An error occurred calling the API: ${e}`);
-    }
-    setLoading(false);
-  };
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
-    if (submitType === 'text') {
-      handleSubmit(event);
-    } else {
-      setLoading(true);
-      setImageUrl("");
-      getImageData().then();
-    }
+
+    handleSubmit(event);
   };
 
   const userColors = {
-    user: '#00c0ff',
-    assistant: '#e02aff',
-    function: '#fff',
-    system: '#fff',
-  }
-
-  const addAudioElement = (blob: Blob) => {
-    const url = URL.createObjectURL(blob);
-    const audio = document.createElement("audio");
-    audio.src = url;
-    audio.controls = true;
-    document.body.appendChild(audio);
+    user: "#00c0ff",
+    assistant: "#e02aff",
+    function: "#fff",
+    system: "#fff",
   };
+
+  // const addAudioElement = (blob: Blob) => {
+  //   const url = URL.createObjectURL(blob);
+  //   const audio = document.createElement("audio");
+  //   audio.src = url;
+  //   audio.controls = true;
+  //   document.body.appendChild(audio);
+  // };
 
   // ReactDOM.createRoot(document.getElementById("root")).render(
   //   <React.StrictMode>
-  //     <AudioRecorder 
+  //     <AudioRecorder
   //       onRecordingComplete={addAudioElement}
   //       audioTrackConstraints={{
   //         noiseSuppression: true,
   //         echoCancellation: true,
-  //       }} 
+  //       }}
   //       downloadOnSavePress={true}
   //       downloadFileExtension="webm"
   //     />
@@ -75,44 +63,77 @@ const Chat = () => {
   // );
 
   const renderResponse = () => {
-    if (submitType === 'text') {
-      return (
-        <div className="response">
-          {messages.length > 0
-          ? messages.map(m => (
+    return (
+      <div className="response">
+        {messages.length > 0
+          ? messages.map((m) => (
               <div key={m.id} className="chat-line">
-                <span style={{color: userColors[m.role]}}>{m.role === 'user' ? 'User: ' : '⚡️Task Wizard: '}</span>
-                {m.content}
-                {/* <span dangerouslySetInnerHTML={{ __html: m.content }} /> */}
+                <span style={{ color: userColors[m.role] }}>
+                  {m.role === "user" ? "User: " : "⚡️Task Wizard: "}
+                </span>
+                <div dangerouslySetInnerHTML={{ __html: m.content }} />
+            
+                {/* {m.content} */}
               </div>
             ))
           : error}
-        </div>
-      );
-    } else {
-      return (
-        <div className="response">
-          {loading && <div className="loading-spinner"></div>}
-          {imageUrl && <Image src={imageUrl} className="image-box" alt="Generated image" width="400" height="400" />}
-        </div>
-      )
-    }
-  }
+      </div>
+    );
+  };
+
+  const toggleTaskStatus = (index: number) => {
+    // Specify the type here
+    const updatedTasks = [...tasks];
+    updatedTasks[index].completed = !updatedTasks[index].completed;
+    setTasks(updatedTasks);
+  };
+
+  const renderTasks = () => {
+    return (
+      <div className="response">
+        {messages.length > 0
+          ? messages.map((m, index) => (
+              <div key={m.id} className="chat-line">
+                <span style={{ color: userColors[m.role] }}>
+                  {m.role === "user" ? "User: " : "⚡️Task Wizard: "}
+                </span>
+                {m.content.split("\n").map((line, lineIndex) => (
+                  <div key={lineIndex}>
+                    {line.startsWith(`${lineIndex + 1}.`) ? (
+                      <>
+                        {line}
+                        <button onClick={() => toggleTaskStatus(lineIndex)}>
+                          Complete
+                        </button>
+                      </>
+                    ) : (
+                      line
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))
+          : error}
+      </div>
+    );
+  };
 
   return (
     <>
       {renderResponse()}
-      <form onSubmit={onSubmit} className="mainForm">
-        <input name="input-field" placeholder="Say anything" onChange={handleInputChange} value={input} />
-        <button type="submit" className="mainButton" disabled={loading} onClick={() => setSubmitType('text')}>
+      <form onSubmit={handleSubmit} className="mainForm">
+        <input
+          name="input-field"
+          placeholder="Say anything"
+          onChange={handleInputChange}
+          value={input}
+        />
+        <button type="submit" className="mainButton">
           SUBMIT
         </button>
-        {/* <button type="submit" className="secondaryButton" disabled={loading} onClick={() => setSubmitType('image')}> */}
-          {/* IMAGE */}
-        {/* </button> */}
       </form>
     </>
   );
-}
+};
 
 export default Chat;

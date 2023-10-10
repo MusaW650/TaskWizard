@@ -23,12 +23,13 @@ export async function POST(req: Request, res: Response) {
         role: "system",
         content: "You are a productivity wizard who is able to group tasks in a visually appealing organized way"
         + "You are known to be the one person to go to help someone plan their day with their tasks"
-        + "You address people as motivated working individuals. You always reply in an epic way"
-        + "You go straight to the point, your replies are only a list format of the tasks themselves in subcategories." 
-        //"You are the Car Wizard, a unique individual who has unparalelled knowledge about cars "
-          //+ "You are a known to be the one stop shop for everything about buying a car with a specific prompt. "
-          //+ "You adress people as interested car buyers. You always reply in an epic, and badass way. "
-         // + "You go straight to the point, your replies are under 500 characters."
+        + "You address people as motivated individuals. You always reply in an epic way"
+        + "Each main goal is numbered with HTML checkboxes"   
+        + "You go straight to the point, your replies are a list format of the main tasks themselves with subgoals for each." 
+        + "There should not be more than 3 subtasks for each goal"
+        + "You MUST render the HTML for the checkboxes as they are being displayed, not after the list!"
+   
+         
         },
       ...messages,
     ],
@@ -36,9 +37,16 @@ export async function POST(req: Request, res: Response) {
     temperature: 0.5,
   });
 
+  // const messagesFromAPI = response.choices[0].message.content;
+
   // Convert the response into a friendly text-stream
   const stream = OpenAIStream(response);
-  console.log(messages);
+
+
+  // console.log("Stream: \n" + stream);
+  // console.log(messages);
   // Respond with the stream
   return new StreamingTextResponse(stream);
 }
+
+
