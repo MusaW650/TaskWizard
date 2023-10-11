@@ -7,7 +7,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
 
+  background-color: #f0f0f0; /* Set your desired background color */
+  color: #333; /* Adjust text color for better contrast */
+  
+
 }
+
 
 .App {
   text-align: center;
@@ -20,8 +25,10 @@ body {
 
 .container {
   width: 100%;
-  max-width: 920px;
   margin: auto;
+  height: 100%;
+  
+  overflow: auto; /* or overflow: scroll; depending on your design */
 }
 
 .logoBox {
@@ -42,6 +49,8 @@ h1 {
 
 .mainForm {
   margin: 20px auto;
+  width: auto; /* Remove the max-width to allow it to expand */
+
 }
 
 .mainForm input {
@@ -53,43 +62,54 @@ h1 {
   outline: none;
 }
 
-.mainButton {
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-size: 1rem;
+
+.chat-line {
   border: 1px solid #e02aff;
-  outline: none;
-  background-color: #e02aff;
+  padding: 10px;
+  border-radius: 10px; /* Add rounded corners for a smoother appearance */
+  box-sizing: border-box; /* Include padding in the element's total width */
+  display: flex; /* Use flexbox to center vertically */
+  align-items: center; /* Center vertically within the container */
+  justify-content: center; /* Center horizontally within the container */
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+
+.mainButton {
+  background-color: #007bff;
   color: white;
-  font-weight: 900;
-  margin-left: 10px;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
   text-transform: uppercase;
+  transition: background-color 0.2s;
 }
 
 .mainButton:hover {
-  background-color: #8f14d2;
+  background-color: #0056b3; /* Adjust the hover color */
 }
 
 .secondaryButton {
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-size: 1rem;
-  border: 1px solid #e02aff;
-  outline: none;
   background-color: transparent;
-  color: white;
-  font-weight: 900;
-  margin-left: 10px;
+  color: #007bff;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
   text-transform: uppercase;
+  transition: color 0.2s;
 }
 
 .secondaryButton:hover {
-  background-color: rgba(184, 65, 184, 0.339);
+  color: #0056b3; /* Adjust the hover color */
 }
 
-button:disabled,
 button:disabled:hover {
   background-color: #b7aeb9;
   border-color: #b7aeb9;
@@ -154,6 +174,7 @@ button:disabled:hover {
 .chat-line {
   margin: 10px 0;
   white-space: pre-wrap;
+  display: flex;
 
 }
 
@@ -165,4 +186,20 @@ button:disabled:hover {
   .mainForm input {
     width: auto;
   }
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding-left: 5px;
+  max-width: 80%;
+  margin: 0 auto;
+  display: flex;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column; /* Ensure the items stack vertically */
+  align-items: center; /* Center items horizontally */
 }
