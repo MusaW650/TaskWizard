@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'GPT-Task Manager App',
-  description: 'Task Manager App using OpenAI API break down tasks',
+  description: 'AI powered task manager app',
 }
 
 export default function RootLayout({
