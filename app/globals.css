@@ -1,42 +1,41 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Arial', sans-serif; /* Use your preferred font */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
-
-  background-color: #f0f0f0; /* Set your desired background color */
-  color: #333; /* Adjust text color for better contrast */
-  
-
+  background-color: #ffffff; /* White background */
+  color: #333; /* Dark text color */
 }
-
 
 .App {
   text-align: center;
-  background-color: #000000;
+  background-color: #007bff; /* Blue background */
   height: 100vh;
-  color: white;
+  color: white; /* White text color */
   display: flex;
+  flex-direction: column; /* Center the content vertically */
+  align-items: center; /* Center the content horizontally */
+  justify-content: center;
   margin: 0;
 }
 
 .container {
   width: 100%;
+  max-width: 920px;
   margin: auto;
   height: 100%;
-  
-  overflow: auto; /* or overflow: scroll; depending on your design */
+  overflow: auto;
 }
 
 .logoBox {
   padding-top: 10px;
+  font-family: 'Helvetica', sans-serif; /* Apply a different font */
 }
 
 h1 {
-  font-size: 50px;
+  font-size: 2rem; /* Increase font size */
+  font-weight: bold; /* Make it bold */
 }
 
 .primaryColor {
@@ -44,41 +43,38 @@ h1 {
 }
 
 .secondaryColor {
-  color: rgb(184, 65, 184);
+  color: #b841b8; /* Adjust the secondary color */
 }
 
 .mainForm {
   margin: 20px auto;
-  width: auto; /* Remove the max-width to allow it to expand */
-
+  width: auto;
 }
 
 .mainForm input {
   width: 100%;
   max-width: 400px;
-  padding: 10px 20px;
+  padding: 10px;
   border-radius: 100px;
-  border: 1px solid white;
+  border: 1px solid #007bff; /* Blue border */
   outline: none;
 }
 
-
 .chat-line {
-  border: 1px solid #e02aff;
+  border: 1px solid white;
   padding: 10px;
-  border-radius: 10px; /* Add rounded corners for a smoother appearance */
-  box-sizing: border-box; /* Include padding in the element's total width */
-  display: flex; /* Use flexbox to center vertically */
-  align-items: center; /* Center vertically within the container */
-  justify-content: center; /* Center horizontally within the container */
-  max-width: 80%;
+  border-radius: 10px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 90%;
   margin: 0 auto;
 }
 
-
 .mainButton {
-  background-color: #007bff;
-  color: white;
+  background-color: white;
+  color: #007bff;
   border: none;
   border-radius: 20px;
   padding: 10px 20px;
@@ -90,7 +86,7 @@ h1 {
 }
 
 .mainButton:hover {
-  background-color: #0056b3; /* Adjust the hover color */
+  background-color: #0056b3;
 }
 
 .secondaryButton {
@@ -107,7 +103,7 @@ h1 {
 }
 
 .secondaryButton:hover {
-  color: #0056b3; /* Adjust the hover color */
+  color: #0056b3;
 }
 
 button:disabled:hover {
@@ -125,25 +121,11 @@ button:disabled:hover {
   height: 50px;
   border: 5px solid #fff;
   border-radius: 50%;
-  border-top-color: #e02aff;
+  border-top-color: #007bff;
   animation: spin 1s ease-in-out infinite;
-  -webkit-animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-  to {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes spin {
-  to {
-    -webkit-transform: rotate(360deg);
-  }
 }
 
 .response {
-  /* display: flex; */
   flex-direction: column;
   height: 60vh;
   max-width: 700px;
@@ -154,17 +136,14 @@ button:disabled:hover {
   border-radius: 20px;
   overflow: auto;
   white-space: pre-wrap;
-
 }
 
 .task button {
-  /* Add your button styles here */
   background-color: #007bff;
   color: white;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
-  /* Add any other styles you need */
 }
 
 .image-box {
@@ -174,8 +153,7 @@ button:disabled:hover {
 .chat-line {
   margin: 10px 0;
   white-space: pre-wrap;
-  display: flex;
-
+  color: white;
 }
 
 .bold {
@@ -192,7 +170,6 @@ button:disabled:hover {
   display: flex;
   gap: 10px;
   align-items: center;
-  padding-left: 5px;
   max-width: 90%;
   margin: 0 auto;
   display: flex;
@@ -200,6 +177,7 @@ button:disabled:hover {
 
 .chat-container {
   display: flex;
-  flex-direction: column; /* Ensure the items stack vertically */
-  align-items: center; /* Center items horizontally */
+  flex-direction: column;
+  align-items: center;
+  color: white;
 }
