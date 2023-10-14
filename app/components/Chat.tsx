@@ -54,6 +54,7 @@ const Chat = () => {
         </div>
       </form>
 
+
       {messages.map((m: Message) => (
         <div key={m.id} className="chat-line">
           <div dangerouslySetInnerHTML={{ __html: m.content }} />
